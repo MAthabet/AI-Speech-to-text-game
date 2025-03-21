@@ -23,7 +23,6 @@ public class chikenLogic : MonoBehaviour
         if (Time.time >= nextEggTime)
         {
             spawnEgg();
-            Debug.Log("Egg Spawned");
             nextEggTime = Time.time + eggSpawnInterval;
         }
     }

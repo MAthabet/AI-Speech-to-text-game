@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 107963746}
   - component: {fileID: 107963747}
   m_Layer: 0
-  m_Name: MoveObjectsManager
+  m_Name: ShipAi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,13 +160,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 107963744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92a3bf5e3ab6924a8536a8b3a0eeeda, type: 3}
+  m_Script: {fileID: 11500000, guid: 58c4ab388d1afae45ae79b5cd17c78fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   llmCharacter: {fileID: 498662973}
   playerText: {fileID: 1966107897}
-  blueSquare: {fileID: 0}
-  redSquare: {fileID: 0}
+  ship: {fileID: 2064691038}
 --- !u!1 &158550913
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,8 +506,13 @@ MonoBehaviour:
   stop: []
   stream: 1
   playerName: user
-  AIName: Ai
-  prompt: 
+  AIName: 'world Defender '
+  prompt: "i was sent on Mission to Defend Earth from an invasion of evil space chickens
+    who plan to turn humanity into their farm animals.\ni am gonna do it by shooting
+    them while dodging their eggs or activating the shield\nBackstory: Created by
+    Earth\u2019s top scientists as the last line of defense.  With no pilots left,
+    it must rely on voice commands from a mysterious human commander to save the
+    world."
   setNKeepToPrompt: 1
   chat: []
   grammarString: 
@@ -1948,6 +1952,21 @@ MonoBehaviour:
   shootInterval: 0.5
   red: {fileID: 919818069}
   blue: {fileID: 1592484920}
+--- !u!114 &2064691045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064691038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c4ab388d1afae45ae79b5cd17c78fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  llmCharacter: {fileID: 498662973}
+  playerText: {fileID: 1966107897}
+  ship: {fileID: 2064691038}
 --- !u!1001 &1133451284917875375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2075,6 +2094,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5292138582072341191, guid: 8fa89932c7d5bed469088fbb2ee2ba7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2064691042}
+    - targetCorrespondingSourceObject: {fileID: 5292138582072341191, guid: 8fa89932c7d5bed469088fbb2ee2ba7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2064691045}
   m_SourcePrefab: {fileID: 100100000, guid: 8fa89932c7d5bed469088fbb2ee2ba7a, type: 3}
 --- !u!1001 &5139161678703109319
 PrefabInstance:

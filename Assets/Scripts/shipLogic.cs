@@ -25,7 +25,7 @@ public class shipLogic : MonoBehaviour
     {
         currentState = ShipState.Attack;
         shield = transform.GetChild(0).gameObject;
-        shield.active = false;
+        setState(ShipState.Defense);
     }
 
     void Update()
@@ -70,7 +70,7 @@ public class shipLogic : MonoBehaviour
             }
         }
     }
-    void setState(ShipState a)
+    public void setState(ShipState a)
     {
         if (a == ShipState.Attack)
         {
