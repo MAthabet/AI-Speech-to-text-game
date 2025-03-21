@@ -16,7 +16,7 @@ public class GeminiAPI : MonoBehaviour
     public enum ResponseMimeType
     {
         PlainText, // Plain text response
-        Json       // JSON formatted response
+        Json       
     }
 
     // Base URL for the Gemini API
