@@ -1,6 +1,5 @@
 using System.IO;
 using HuggingFace.API;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +7,7 @@ public class SpeechRecognitionTest : MonoBehaviour
 {
     [SerializeField] private Button startButton;
     [SerializeField] private Button stopButton;
-    [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] OpenAIChat GPTModel;
+    [SerializeField] private InputField text;
 
     private AudioClip clip;
     private byte[] bytes;
@@ -32,7 +30,6 @@ public class SpeechRecognitionTest : MonoBehaviour
 
     private void StartRecording()
     {
-        text.color = Color.white;
         text.text = "Recording...";
         startButton.interactable = false;
         stopButton.interactable = true;
@@ -53,16 +50,12 @@ public class SpeechRecognitionTest : MonoBehaviour
 
     private void SendRecording()
     {
-        text.color = Color.yellow;
         text.text = "Sending...";
         stopButton.interactable = false;
         HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response => {
-            text.color = Color.white;
             text.text = response;
-            GPTModel.SendToChatGPT(response);
             startButton.interactable = true;
         }, error => {
-            text.color = Color.red;
             text.text = error;
             startButton.interactable = true;
         });

@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Unity.VisualScripting;
 
 // This class handles communication with the Gemini API for generating content based on user prompts.
-public class GeminiAPI : MonoBehaviour
+public class MyGeminiAPI : MonoBehaviour
 {
     #region Enums & Constants
     // Enum to define the types of responses we can expect from the API.
@@ -27,8 +29,8 @@ public class GeminiAPI : MonoBehaviour
     // Serialized fields to allow configuration in the Unity Inspector
     [SerializeField] private string _modelName = "gemini-2.0-flash"; // Name of the model to use
     [SerializeField] private string _apiKey; // API key for authentication
-    [SerializeField] private InputField _promptInputField; // Input field for user prompts
-    [SerializeField] private Button _sendButton; // Button to send the prompt
+    public string InputPrompt; // Input field for user prompts
+    [SerializeField] public string ResponseAction;
     [SerializeField] private Text _responseText; // Text field to display the response
     [SerializeField, TextArea(3, 10)] private string _systemInstructions; // Instructions for the system
     [SerializeField] private ResponseMimeType _responseMimeType = ResponseMimeType.Json; // Expected response type
@@ -64,34 +66,25 @@ public class GeminiAPI : MonoBehaviour
     // Unity method called when the script instance is being loaded
     private void Awake()
     {
-        _sendButton.onClick.AddListener(OnButtonClick_SendPrompt); // Add listener for button click
         InitializeChatHistory(); // Initialize chat history on awake
     }
 
     // Unity method called when the object is being destroyed
     private void OnDestroy()
     {
-        _sendButton.onClick.RemoveListener(OnButtonClick_SendPrompt); // Remove listener to prevent memory leaks
     }
     #endregion
 
     #region UI Interaction
     // Handles the send button click event
-    private async void OnButtonClick_SendPrompt()
+    public async Task SendPrompt()
     {
-        // Check if the input field is empty
-        if (string.IsNullOrEmpty(_promptInputField.text))
-        {
-            return; // Exit if no prompt is provided
-        }
 
-        _sendButton.interactable = false; // Disable button to prevent multiple clicks
+
         _responseText.text = "Generating response..."; // Indicate processing
 
         // Generate content asynchronously
-        string response = await GenerateContentAsync(_promptInputField.text);
-        _responseText.text = response ?? "Failed to generate response"; // Display response or error message
-        _sendButton.interactable = true; // Re-enable button
+        string response = await GenerateContentAsync(InputPrompt);
     }
     #endregion
 
@@ -213,7 +206,15 @@ public class GeminiAPI : MonoBehaviour
             // Parse the response from the API
             var responseJObject = JObject.Parse(request.downloadHandler.text);
             string aiResponse = responseJObject["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.ToString(); // Extract AI response
+            Debug.Log("AI Response: " + aiResponse);
 
+            // Log the AI response
+            actionResponse = JsonConvert.DeserializeObject<ActionResponse>(aiResponse);
+            _responseText.text = actionResponse.response;
+
+            Debug.Log("res: " + actionResponse.response);
+            Debug.Log("action: " + actionResponse.action);
+            Debug.Log("target: " + actionResponse.target);
             // If chat history is enabled and response is valid, add to chat history
             if (_enableChatHistory && !string.IsNullOrEmpty(aiResponse))
             {
@@ -229,4 +230,11 @@ public class GeminiAPI : MonoBehaviour
         }
     }
     #endregion
+    public ActionResponse actionResponse;
+    public class ActionResponse
+    {
+        public string response;
+        public string action;
+        public string target;
+    }
 }

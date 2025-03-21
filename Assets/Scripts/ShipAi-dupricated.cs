@@ -13,19 +13,22 @@ public class ShipAi : MonoBehaviour
     public LLMCharacter llmCharacter;
     public InputField playerText;
     public GameObject ship;
+    public GameObject geminiManager;
+    private MyGeminiAPI geminiAPI;
 
     void Start()
     {
         playerText.onSubmit.AddListener(onInputFieldSubmit);
         playerText.Select();
+        geminiAPI = geminiManager.GetComponent<MyGeminiAPI>();
     }
     string ConstructDirectionPrompt(string message)
     {
         string prompt = "Classify the player's command into one of the following actions:\n\n";
 
-        prompt += "**1. Chat:** General conversation, not a game command.\n";
-        prompt += "**2. Skill:** The player wants to use a skill.\n";
-        prompt += "**3. Enemy:** The player wants to target a specific enemy.\n\n";
+        prompt += "- Chat:** General conversation, not a game command.\n";
+        prompt += "- Skill:** The player wants to use a skill.\n";
+        prompt += "- Enemy:** The player wants to target a specific enemy.\n\n";
 
         prompt += "Choices:\n";
         prompt += "- Chat: (Reply with: chat)\n";
@@ -46,7 +49,7 @@ public class ShipAi : MonoBehaviour
         // 2. Get response from AI
         var response = await llmCharacter.Chat(ConstructDirectionPrompt(message));
         string[] responses = response.Split(',');
-
+        Debug.Log("AI Response: " + response);
         if (responses.Length < 2)
         {
             Debug.LogError("Invalid AI Response: " + response);
@@ -57,7 +60,7 @@ public class ShipAi : MonoBehaviour
         string category = responses[0].Trim();
         string choice = responses[1].Trim();
 
-        Debug.Log("Category: " + category + " | Choice: " + choice);
+        //Debug.Log("Category: " + category + " | Choice: " + choice);
 
         // 3. Handle AI Response Correctly
         switch (category)
@@ -87,9 +90,16 @@ public class ShipAi : MonoBehaviour
     {
         Debug.Log("Player Chat: " + message);
         // Send the chat input to the LLM character and await response
-        string response = await llmCharacter.Chat(message);
+        if (geminiAPI == null)
+        {
+            Debug.LogError("Gemini API is not set!");
+            return;
+        }
+        geminiAPI.InputPrompt = message;
+        await geminiAPI.SendPrompt();
+        //string response = await llmCharacter.Chat(message);
 
-        Debug.Log("LLM Chat Response: " + response);
+        //Debug.Log("LLM Chat Response: " + response);
     }
    
     void TargetEnemy(string target)
@@ -140,12 +150,12 @@ public class ShipAi : MonoBehaviour
     }
 
     bool onValidateWarning = true;
-    void OnValidate()
-    {
-        if (onValidateWarning && !llmCharacter.remote && llmCharacter.llm != null && llmCharacter.llm.model == "")
-        {
-            Debug.LogWarning($"Please select a model in the {llmCharacter.llm.gameObject.name} GameObject!");
-            onValidateWarning = false;
-        }
-    }
+    //void OnValidate()
+    //{
+    //    if (onValidateWarning && !llmCharacter.remote && llmCharacter.llm != null && llmCharacter.llm.model == "")
+    //    {
+    //        Debug.LogWarning($"Please select a model in the {llmCharacter.llm.gameObject.name} GameObject!");
+    //        onValidateWarning = false;
+    //    }
+    //}
 }
