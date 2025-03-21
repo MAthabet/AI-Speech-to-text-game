@@ -64,6 +64,6 @@
 
 🎯 *Join the mission. Stop the space chickens. Save the world!* 🛸🐔🌍
 --------------------------------
-###Important
+### Important
 this read me is also ai generated
-you need to install the ignored file locally
+you need to install LLMUnity files locally to be able to run the repo 
