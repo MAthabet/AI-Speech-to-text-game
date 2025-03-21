@@ -24,8 +24,8 @@ public class ShipAi : MonoBehaviour
         string prompt = "Classify the player's command into one of the following actions:\n\n";
 
         prompt += "**1. Chat:** General conversation, not a game command.\n";
-        prompt += "**2. Skill:** The player wants to use a skill (attack or shield to defend).\n";
-        prompt += "**3. Enemy:** The player wants to target a specific enemy.(red or blue chiken)\n\n";
+        prompt += "**2. Skill:** The player wants to use a skill.\n";
+        prompt += "**3. Enemy:** The player wants to target a specific enemy.\n\n";
 
         prompt += "Choices:\n";
         prompt += "- Chat: (Reply with: chat)\n";
@@ -66,12 +66,12 @@ public class ShipAi : MonoBehaviour
                 HandleChat(message); // Separate chat handling
                 break;
 
-            case "Skill Usage":
-                if (choice == "shoot") ChangeStyle("attacking");
+            case "Skill":
+                if (choice == "attack") ChangeStyle("attacking");
                 else if (choice == "shield") ChangeStyle("deffending");
                 break;
 
-            case "Enemy Selection":
+            case "Enemy":
                 TargetEnemy(choice); // blue, red, or none
                 break;
             default:
@@ -98,11 +98,9 @@ public class ShipAi : MonoBehaviour
         {
             case "Blue":
             case "blue":
-                ship.GetComponent<shipLogic>().FollowTarget(GetComponent<shipLogic>().blue);
-                break;
             case "Red":
             case "red":
-                ship.GetComponent<shipLogic>().FollowTarget(GetComponent<shipLogic>().red);
+                ship.GetComponent<shipLogic>().FollowTarget(target);
                 break;
             case "none":
             case "None":

@@ -8,6 +8,7 @@ public class shipLogic : MonoBehaviour
     }
 
     private Transform currentTarget;
+    private string currentColor;
     public ShipState currentState;
     private bool shieldActive = false;
     public GameObject bulletPrefab; // Assign in inspector
@@ -49,7 +50,7 @@ public class shipLogic : MonoBehaviour
         //}
         if (currentState == ShipState.Attack && currentTarget != null)
         {
-            FollowTarget(currentTarget);
+            FollowTarget(currentColor);
         }
         if (Time.time >= nextShoot)
         {
@@ -86,16 +87,33 @@ public class shipLogic : MonoBehaviour
     public void ActivateShield()
     {
             shieldActive = true;
-            shield.active = true;
+            shield.SetActive(true);
     }
     public void DectivateShield()
     {
         shieldActive = false;
-        shield.active = false;
+        shield.SetActive(false);
     }
 
-    public void FollowTarget(Transform target)
+    public void FollowTarget(string color)
     {
+        Transform target;
+        switch(color)
+        {
+            case "Blue":
+            case "blue":
+                target = blue;
+                currentColor = "blue";
+                break;
+            case "Red":
+            case "red":
+                target = red;
+                currentColor = "red";
+                break;
+            default:
+                target = null;
+                break;
+        }
         if (target != null && currentState == ShipState.Attack)
         {
             currentTarget = target;
