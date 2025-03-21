@@ -72,7 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 #Ai modules
-/LLMUnity
 /Assets/StreamingAssets
 /Assets/LLMUnity
 /Assets/TextMesh Pro
