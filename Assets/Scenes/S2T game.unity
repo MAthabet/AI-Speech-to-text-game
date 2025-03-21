@@ -978,6 +978,11 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 19.16037}
   m_EdgeRadius: 0
+--- !u!4 &919818069 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4981222079873388392, guid: 850b66d2337e8c74fb5ccad87609a2bd, type: 3}
+  m_PrefabInstance: {fileID: 5139161678703109319}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047848253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1507,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1592484920 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4228826547263105702, guid: 57f52b62e7d6e044a92405d5e1124947, type: 3}
+  m_PrefabInstance: {fileID: 1133451284917875375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1609985808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,10 +1941,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 789492628948720437, guid: 546215fe970ed9a4a9847984c4d5ac00, type: 3}
   shootingForce: 10
   followSpeed: 5
   HP: 100
+  shootInterval: 0.5
+  red: {fileID: 919818069}
+  blue: {fileID: 1592484920}
 --- !u!1001 &1133451284917875375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1943,6 +1956,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2560061114334059356, guid: 57f52b62e7d6e044a92405d5e1124947, type: 3}
+      propertyPath: m_Mass
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560061114334059356, guid: 57f52b62e7d6e044a92405d5e1124947, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3496324446880511375, guid: 57f52b62e7d6e044a92405d5e1124947, type: 3}
       propertyPath: m_Name
       value: BlueChicken
@@ -2106,6 +2127,14 @@ PrefabInstance:
     - target: {fileID: 4981222079873388392, guid: 850b66d2337e8c74fb5ccad87609a2bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039629193572528332, guid: 850b66d2337e8c74fb5ccad87609a2bd, type: 3}
+      propertyPath: m_Mass
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039629193572528332, guid: 850b66d2337e8c74fb5ccad87609a2bd, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

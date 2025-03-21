@@ -17,32 +17,45 @@ public class shipLogic : MonoBehaviour
     GameObject shield;
     float nextShoot = 0;
     public float shootInterval = 0.5f;
+    public Transform red;
+    public Transform blue;
+
 
     void Start()
     {
         currentState = ShipState.Attack;
-        shield = GetComponentInChildren<GameObject>();
+        shield = transform.GetChild(0).gameObject;
         shield.active = false;
     }
 
     void Update()
     {
+        //for testing
+        //if( Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    setState(ShipState.Defense);
+        //}
+        //else if (Input.GetKeyUp(KeyCode.W))
+        //{
+        //    setState(ShipState.Attack);
+        //}
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    FollowTarget(red);
+        //}
+        //else if (Input.GetKeyUp(KeyCode.R))
+        //{
+        //    FollowTarget(blue);
+        //}
         if (currentState == ShipState.Attack && currentTarget != null)
         {
             FollowTarget(currentTarget);
         }
         if (Time.time >= nextShoot)
         {
-            shoot();
+            Shoot();
             nextShoot = Time.time + shootInterval;
         }
-    }
-    void shoot()
-    {
-        GameObject newEgg = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        newEgg.GetComponent<bulletLogic>().direction = 1;
-        newEgg.GetComponent<bulletLogic>().speed = shootingForce;
-        newEgg.GetComponent<bulletLogic>().damage = shootingForce;
     }
 
     public void Shoot()
@@ -59,10 +72,10 @@ public class shipLogic : MonoBehaviour
     }
     void setState(ShipState a)
     {
-        if (a == ShipState.Attack   )
+        if (a == ShipState.Attack)
         {
             currentState = ShipState.Attack;
-            ActivateShield();
+            DectivateShield();
         }
         else if (a == ShipState.Defense)
         {
@@ -72,19 +85,16 @@ public class shipLogic : MonoBehaviour
     }
     public void ActivateShield()
     {
-        if (currentState == ShipState.Defense)
-        {
             shieldActive = true;
             shield.active = true;
-        }
-        else
-        {
-            shieldActive = false;
-            shield.active = false;
-        }
+    }
+    public void DectivateShield()
+    {
+        shieldActive = false;
+        shield.active = false;
     }
 
-        public void FollowTarget(Transform target)
+    public void FollowTarget(Transform target)
     {
         if (target != null && currentState == ShipState.Attack)
         {
